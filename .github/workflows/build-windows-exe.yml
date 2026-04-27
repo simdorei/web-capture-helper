@@ -1,8 +1,12 @@
 name: build-windows-exe
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 jobs:
@@ -27,9 +31,16 @@ jobs:
           Copy-Item dist\web-capture-helper.exe release\
           Copy-Item browser_capture_snippet.js release\
           Copy-Item README_QUICKSTART.md release\
+          New-Item -ItemType Directory -Force release\docs
+          Copy-Item docs\CAPTURE_PLAN.md release\docs\
           Compress-Archive -Path release\* -DestinationPath web-capture-helper-windows.zip -Force
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: web-capture-helper-windows
           path: web-capture-helper-windows.zip
+      - name: Upload release asset
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: web-capture-helper-windows.zip

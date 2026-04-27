@@ -12,4 +12,6 @@ pyinstaller --clean --onefile --name web-capture-helper ^
 if errorlevel 1 exit /b 1
 copy /Y browser_capture_snippet.js dist\browser_capture_snippet.js >nul
 copy /Y README_QUICKSTART.md dist\README_QUICKSTART.md >nul
+if not exist dist\docs mkdir dist\docs
+copy /Y docs\CAPTURE_PLAN.md dist\docs\CAPTURE_PLAN.md >nul
 echo Built dist\web-capture-helper.exe
