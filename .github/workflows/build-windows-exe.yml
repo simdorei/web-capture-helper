@@ -1,0 +1,35 @@
+name: build-windows-exe
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+      - name: Build exe
+        run: .\build_exe.bat
+      - name: Package artifact
+        run: |
+          New-Item -ItemType Directory -Force release
+          Copy-Item dist\web-capture-helper.exe release\
+          Copy-Item browser_capture_snippet.js release\
+          Copy-Item README_QUICKSTART.md release\
+          Compress-Archive -Path release\* -DestinationPath web-capture-helper-windows.zip -Force
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-capture-helper-windows
+          path: web-capture-helper-windows.zip
