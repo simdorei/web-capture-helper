@@ -109,8 +109,10 @@ def test_health_reports_runtime_paths_and_frozen_mode(tmp_path):
     assert payload["frozen"] is False
     assert payload["capture_dir"] == str(tmp_path / "captures")
     assert payload["log_dir"] == str(tmp_path / "logs")
-    assert payload["capture_file"].endswith("captures/" + datetime.now(timezone.utc).strftime("%Y%m%d") + "/captures.jsonl")
-    assert payload["log_file"].endswith("logs/web-capture-helper.log")
+    capture_file = payload["capture_file"].replace("\\", "/")
+    log_file = payload["log_file"].replace("\\", "/")
+    assert capture_file.endswith("captures/" + datetime.now(timezone.utc).strftime("%Y%m%d") + "/captures.jsonl")
+    assert log_file.endswith("logs/web-capture-helper.log")
 
 
 def test_summarize_capture_for_log_excludes_sensitive_fields():
