@@ -53,6 +53,28 @@ http://127.0.0.1:33133/zip
 logs\web-capture-helper.log
 ```
 
+실행 직후 오류로 종료되면 아래 파일을 확인하세요.
+
+```text
+logs\web-capture-helper-crash.log
+```
+
+> 참고: 위 경로에 쓸 수 없는 환경이면 콘솔에 출력된 fallback 경로(예: `%TEMP%\\web-capture-helper\\<user>\\logs\\...`)를 전달하세요.
+
+### 문제 발생 시 전달할 파일 (공용 PC)
+
+아래 중 존재하는 파일을 **그대로 압축(zip)** 해서 전달하세요.
+
+```text
+logs\web-capture-helper-crash.log
+logs\web-capture-helper.log
+captures\YYYYMMDD\captures.jsonl
+```
+
+최소 전달 권장:
+1) `logs\web-capture-helper-crash.log` (실행 즉시 종료 이슈)
+2) `logs\web-capture-helper.log` (실행은 되지만 동작 이상)
+
 로그에는 startup/캡처요약/validation error/download/zip 요청이 남고,
 URL은 origin 수준으로 축약되며,
 민감값(Cookie/Auth/token/session/csrf)과 request/response body 원문은 남기지 않습니다.

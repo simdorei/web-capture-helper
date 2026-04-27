@@ -358,7 +358,7 @@ def create_app(config: RuntimeConfig | None = None, logger: logging.Logger | Non
             )
         yield
 
-    app = FastAPI(title=APP_NAME, version="0.2.1", lifespan=lifespan)
+    app = FastAPI(title=APP_NAME, version="0.2.2", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
