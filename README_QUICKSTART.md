@@ -54,4 +54,5 @@ logs\web-capture-helper.log
 ```
 
 로그에는 startup/캡처요약/validation error/download/zip 요청이 남고,
+URL은 origin 수준으로 축약되며,
 민감값(Cookie/Auth/token/session/csrf)과 request/response body 원문은 남기지 않습니다.
